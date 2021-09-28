@@ -1,11 +1,12 @@
-import numpy as np
 import matplotlib.pyplot as plt
-
-learning_rate = 0.01
-epochs = 200
-
-n_samples = 3
-train_x = np.linspace(0, 20, n_samples)
-train_y = 3 * train_x + 4 * np.random.rand(n_samples)
-print(train_x)
-print(train_x*train_x)
+i=0
+x=[]
+y=[]
+while i<100000:
+    plt.clf()  #清除上一幅图像
+    x.append(i)
+    y.append(i**2)
+    plt.plot(x,y)
+    i=i+1
+    plt.pause(0.01)  # 暂停0.01秒
+    plt.ioff()  # 关闭画图的窗口
