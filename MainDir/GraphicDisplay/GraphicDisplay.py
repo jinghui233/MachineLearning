@@ -22,13 +22,11 @@ class GraphicDisplay:
     def register_key_event(self, func):
         self.func = func
 
-    def addlineShow(self, x, y):
-        plt.plot([1, 100], [1, 100], alpha=0)
-        plt.plot(x, y)
+    def addlineShow(self, x, y, color="red", alpha=1):
+        plt.plot(x, y, color=color, alpha=alpha)
 
-    def addPointsShow(self, x, y, color="coral"):
-        plt.plot([1, 100], [1, 100], alpha=0)
-        plt.plot(x, y, 'o', color=color)
+    def addPointsShow(self, x, y, color="coral", alpha=1):
+        plt.plot(x, y, 'o', color=color, alpha=alpha)
 
     def clear(self):
         plt.cla()

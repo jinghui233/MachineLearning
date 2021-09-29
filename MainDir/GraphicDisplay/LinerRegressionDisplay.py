@@ -1,34 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from MainDir.GraphicDisplay.GraphicDisplay import GraphicDisplay
 
-
-class LinerRegressionDisplay:
-    def __init__(self):
-        self.stop = False
-        fig, ax = plt.subplots()
-        fig.canvas.mpl_connect('key_press_event', self.on_key_press)
-
-    def on_key_press(self, event):
-        print(event.key)
-        self.stop = True
-
+class LinerRegressionDisplay(GraphicDisplay):
     def addEquationShow(self, x, theta):
         y = theta[0] + theta[1] * x + theta[2] * x * x
         plt.plot(x, y)
 
-    def addlineShow(self, x, y):
-        plt.plot(x, y)
-
-    def addPointsShow(self, x, y):
-        plt.plot(x, y, 'o')
-
-    def clear(self):
-        plt.cla()
-
-    def show(self):
-        self.stop = False
-        while not self.stop:
-            plt.pause(0.01)
 
 
 if __name__ == "__main__":
