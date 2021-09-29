@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from GraphicDisplay import GraphicDisplay as Player
+from MainDir.GraphicDisplay.GraphicDisplay import GraphicDisplay as Player
 
 
 class LogisticRegression:
@@ -10,7 +10,7 @@ class LogisticRegression:
         self.class1 = []
         self.class2 = []
         self.curclass = self.class1
-        self.load()
+        self.class1, self.class2 = self.load()
 
     def generateData(self):
         self.update()
@@ -27,15 +27,19 @@ class LogisticRegression:
             self.curclass.append([event.xdata, event.ydata])
             self.update()
 
-    def load(self):
-        with open(f"Debug\\LogisticRegression.txt", 'r') as f:
+    @staticmethod
+    def load():
+        class1 = []
+        class2 = []
+        with open(f"D:\\ProjectCode\\LTest\\MachineLearning\\MainDir\\GraphicDisplay\\Debug\\LogisticRegression.txt", 'r') as f:
             strs = f.readlines()
         str0sp = strs[0].split(";")
         for str0 in str0sp:
-            self.class1.append([float(str0.split(",")[0]), float(str0.split(",")[1])])
+            class1.append([float(str0.split(",")[0]), float(str0.split(",")[1])])
         str1sp = strs[1].split(";")
         for str1 in str1sp:
-            self.class2.append([float(str1.split(",")[0]), float(str1.split(",")[1])])
+            class2.append([float(str1.split(",")[0]), float(str1.split(",")[1])])
+        return class1, class2
 
     def save(self):
         savestr = []
@@ -60,10 +64,34 @@ class LogisticRegression:
             npc2 = np.array(self.class2)
             self.player.addPointsShow(npc2[:, 0], npc2[:, 1], "green")
 
-    def getTrainData(self):
-        pass
+    @staticmethod
+    def classtonparray(class1, class2):
+        classall = []
+        for c1 in class1:
+            classall.append([c1[0], c1[1], 0])
+        for c2 in class2:
+            classall.append([c2[0], c2[1], 1])
+        return np.array(classall)
+
+    @staticmethod
+    def nparraytoclass(npm):
+        class1 = []
+        class2 = []
+        for npmin in npm:
+            if npmin[2] == 0:
+                class1.append([npmin[0], npmin[1]])
+            else:
+                class2.append([npmin[0], npmin[1]])
+        return class1, class2
+
+    @staticmethod
+    def getTrainData():
+        class1, class2 = LogisticRegression.load()
+        return LogisticRegression.classtonparray(class1, class2)
 
 
 if __name__ == "__main__":
     lr = LogisticRegression()
     lr.generateData()
+    # npm = lr.classtonparray(lr.class1, lr.class2)
+    # lr.nparraytoclass(npm)

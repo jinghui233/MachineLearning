@@ -13,7 +13,7 @@ class LinerRegressionModel:
         train_set = np.ndarray((len(train_x), 2))
         train_set[:, 0] = train_x
         train_set[:, 1] = train_y
-        self.ratea = 0.0001
+        self.ratea = 0.00001
         self.theta = np.array([0, 0, 0])
         self.train_set = train_set
         self.player.register_key_event(self.on_click)
@@ -22,10 +22,9 @@ class LinerRegressionModel:
     def calc_d_theta(self, theta: np.array, train_set: np.array):
         dtheta = np.zeros(theta.shape)
         for index in range(len(train_set)):
-            dtheta[0] = theta[0] + theta[1] * train_set[index][0] + theta[2] * train_set[index][0] * train_set[index][0] - train_set[index][1]
-            dtheta[1] = (theta[0] + theta[1] * train_set[index][0] + theta[2] * train_set[index][0] * train_set[index][0] - train_set[index][1]) * train_set[index][0]
-            dtheta[2] = (theta[0] + theta[1] * train_set[index][0] + theta[2] * train_set[index][0] * train_set[index][0] - train_set[index][1]) * train_set[index][0] * \
-                        train_set[index][0]
+            dtheta[0] += theta[0] + theta[1] * train_set[index][0] + theta[2] * train_set[index][0] ** 2 - train_set[index][1]
+            dtheta[1] += (theta[0] + theta[1] * train_set[index][0] + theta[2] * train_set[index][0] ** 2 - train_set[index][1]) * train_set[index][0]
+            dtheta[2] += (theta[0] + theta[1] * train_set[index][0] + theta[2] * train_set[index][0] ** 2 - train_set[index][1]) * train_set[index][0] ** 2
         dtheta /= len(train_set)
         return dtheta
 
